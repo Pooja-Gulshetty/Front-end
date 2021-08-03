@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {LoginService} from "./service/login.service";
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,31 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'front-end';
+
+  constructor(private loginService: LoginService) {
+  }
+
+  ngOnInit(): void {
+
+  }
+
+  isAuthenticated() {
+    return this.loginService.isAuthenticated()
+  }
+
+  getToken() {
+    return this.loginService.getToken()
+  }
+
+  getFinanceId() {
+    return this.loginService.getFinanceId()
+  }
+
+  getFinanceName() {
+    return this.loginService.getFinanceName()
+  }
+
+  getUser() {
+    return this.loginService.getUser()
+  }
 }

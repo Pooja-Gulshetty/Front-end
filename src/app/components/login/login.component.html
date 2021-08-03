@@ -1,0 +1,51 @@
+l̥  <!-- BEGIN #app -->
+<div id="app" class="app">
+  <!-- BEGIN login -->
+  <div class="login login-v1">
+    <!-- BEGIN login-container -->
+    <div class="login-container">
+      <!-- BEGIN login-header -->
+      <div class="login-header">
+        <div class="brand">
+          <div class="d-flex align-items-center">
+            <span class="logo"></span> <b>Finance Login</b>
+          </div>
+        </div>
+        <div class="icon">
+          <i class="fa fa-lock"></i>
+        </div>
+      </div>
+      <!-- END login-header -->
+      <!-- BEGIN login-body -->
+      <div class="login-body">
+        <!-- BEGIN login-content -->
+        <div class="login-content fs-13px">
+          <form method="GET" #userLogin="ngForm" (ngSubmit)="loginUser(userLogin)">
+            <div class="form-floating mb-20px">
+              <input type="email" class="form-control fs-13px h-45px" id="emailAddress" required
+                     placeholder="Email Address" [(ngModel)]="name" name="username"/>
+              <label for="emailAddress" class="d-flex align-items-center py-0">User Name</label>
+            </div>
+            <div class="form-floating mb-20px">
+              <input type="password" class="form-control fs-13px h-45px" id="password" required placeholder="Password"
+                     [(ngModel)]="password" name="password"/>
+              <label for="password" class="d-flex align-items-center py-0">Password</label>
+            </div>
+            <div class="login-buttons">
+              <button type="submit" class="btn h-45px btn-success d-block w-100 btn-lg">Login</button>
+            </div>
+            <div class="alert alert-danger error-message" role="alert" *ngIf="invalidForm">
+              Please enter email address and password
+            </div>
+            <div class="alert alert-danger error-message" role="alert" *ngIf="invalidcredential">
+              Invalid email address or password
+            </div>
+          </form>
+        </div>
+        <!-- END login-content -->
+      </div>
+      <!-- END login-body -->
+    </div>
+    <!-- END login-container -->
+  </div>
+</div>
