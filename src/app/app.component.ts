@@ -16,6 +16,10 @@ export class AppComponent {
 
   }
 
+  setLanguage(language: string) {
+    console.log("Language is " + language)
+  }
+
   isAuthenticated() {
     return this.loginService.isAuthenticated()
   }

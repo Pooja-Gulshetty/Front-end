@@ -8,12 +8,13 @@ import {CalculatorComponent} from "./components/calculator/calculator.component"
 import {HomeComponent} from "./components/home/home.component";
 
 const routes: Routes = [
-  {path: '', component: LoginComponent},
+  {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent},
   {path: 'customers', component: CustomerComponent},
   {path: 'Transactions', component: TransactionComponent},
   {path: 'calculator', component: CalculatorComponent},
-  {path: 'logout', component: LogoutComponent}
+  {path: 'logout', component: LogoutComponent},
+  {path: 'login', component: LoginComponent},
 ];
 
 @NgModule({
