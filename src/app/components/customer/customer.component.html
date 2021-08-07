@@ -1,4 +1,126 @@
-<button type="button" class="btn btn-primary"><i class="far fa-user pr-2" aria-hidden="true"></i>Customer</button>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+        href="#createUser"><i class="far fa-user pr-2" aria-hidden="true"></i>Customer
+</button>
+
+<div class="modal" id="createUser" aria-hidden="true" aria-labelledby="createUserModalToggleLabel" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title form-header" i18n="@@createNewUserHeaderId">New Customer Details</h4>
+        <button type="button" class="btn btn-xs btn-icon btn-danger" data-bs-dismiss="modal"
+                #closeCreatePopup data-toggle="panel-remove"><i class="fa fa-times"></i></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="panel-body">
+          <form class="form-horizontal" #createCustomerForm="ngForm" data-parsley-validate="true" name="demo-form"
+                (ngSubmit)="createCustomer(createCustomerForm)">
+            <div class="form-group row mb-3">
+              <label class="col-lg-4 col-form-label form-label" for="customerName">Customer
+                Name * :</label>
+              <div class="col-lg-8">
+                <input class="form-control" type="text" id="customerName" name="customerName"
+                       placeholder="First Name" required data-parsley-required="true" [(ngModel)]="name"
+                       #customerName="ngModel"/>
+                <div class="alert alert-danger error-message" role="alert" *ngIf="invalidForm && customerName.invalid">
+                  Please enter customer name
+                </div>
+              </div>
+            </div>
+            <div class="form-group row mb-3">
+              <label class="col-lg-4 col-form-label form-label" for="phoneNumber">Phone
+                Number * :</label>
+              <div class="col-lg-8">
+                <input class="form-control" type="text" id="phoneNumber" name="phoneNumber"
+                       placeholder="Phone Number"
+                       required data-parsley-required="true" [(ngModel)]="phoneNumber" #phonenumber="ngModel"/>
+                <div class="alert alert-danger error-message" role="alert" *ngIf="invalidForm && phonenumber.invalid">
+                  Please enter phoneNumber
+                </div>
+              </div>
+            </div>
+            <div class="form-group row mb-3">
+              <label class="col-lg-4 col-form-label form-label" for="totalAmount">Total Amount
+                * :</label>
+              <div class="col-lg-8">
+                <input class="form-control" type="text" id="totalAmount" name="totalAmount"
+                       placeholder="Total Amount"
+                       required data-parsley-required="true" [(ngModel)]="totalAmount"
+                       #Amount="ngModel"/>
+                <div class="alert alert-danger error-message" role="alert"
+                     *ngIf="invalidForm &&Amount.invalid">
+                  Please enter the Amount
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row mb-3">
+              <label class="col-lg-4 col-form-label form-label" for="monthlyPaymentDate">MonthlyPaymentDate
+                * :</label>
+              <div class="col-lg-8">
+                <input class="form-control" type="text" id="monthlyPaymentDate" name="monthlyPaymentDate"
+                       placeholder="Monthly Payment Date"
+                       required data-parsley-required="true" [(ngModel)]="monthlyPaymentDate"
+                       #PaymentDate="ngModel"/>
+                <div class="alert alert-danger error-message" role="alert"
+                     *ngIf="invalidForm &&PaymentDate.invalid">
+                  Please enter monthlyPaymentDate
+                </div>
+              </div>
+            </div>
+            <div class="form-group row mb-3">
+              <label class="col-lg-4 col-form-label form-label" for="interestRate">InterestRate
+                * :</label>
+              <div class="col-lg-8">
+                <input class="form-control" type="text" id="interestRate" name="interestRate"
+                       placeholder="Interest Rate"
+                       required data-parsley-required="true" [(ngModel)]="interestRate" #interest="ngModel"/>
+                <div class="alert alert-danger error-message" role="alert" *ngIf="invalidForm && interest.invalid">
+                  Please enter interestRate
+                </div>
+              </div>
+            </div>
+            <div class="form-group row mb-3">
+              <label class="col-lg-4 col-form-label form-label" for="months">Months
+                * :</label>
+              <div class="col-lg-8">
+                <input class="form-control" type="text" id="months" name="months"
+                       placeholder="Months"
+                       required data-parsley-required="true" [(ngModel)]="months" #month="ngModel"/>
+                <div class="alert alert-danger error-message" role="alert" *ngIf="invalidForm && month.invalid">
+                  Please enter months
+                </div>
+              </div>
+            </div>
+
+
+            <br>
+            <div class="form-group row">
+              <label class="col-lg-4 col-form-label form-label">&nbsp;</label>
+              <div class="col-lg-8">
+                <button type="submit" class="btn btn-primary submit-button" data-bs-toggle="modal"
+                        i18n="@@createUserSubmitButtonId">
+                  Submit
+                </button>
+                <div>
+                </div>
+              </div>
+              <div class="alert alert-danger error-message" role="alert" *ngIf="errorWhileCreating">
+                {{createErrorMessage}}
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- END panel-body -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <br>
 
 <br>
@@ -59,3 +181,11 @@
     </table>
   </div>
 </div>
+
+
+<!--customerName" : "Pooja",
+"phoneNumber": "+919611671871",
+"monthlyPaymentDate": 10,
+"totalAmount": 100000,
+"interestRate": 5,
+"months":-->

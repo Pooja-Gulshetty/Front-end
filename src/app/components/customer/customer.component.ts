@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CustomerResponse} from "./customer-response";
 import {LoginService} from "../../service/login.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-customer',
@@ -17,6 +18,15 @@ export class CustomerComponent implements OnInit {
 
   componentUrl = "/customers"
   customerList: CustomerResponse[] = []
+  name=""
+  invalidForm = false
+  errorWhileCreating = false
+  createErrorMessage= ""
+  phoneNumber= ""
+  monthlyPaymentDate=""
+  interestRate=""
+  months=""
+  totalAmount=""
 
   ngOnInit(): void {
     this.getCustomerList()
@@ -51,4 +61,7 @@ export class CustomerComponent implements OnInit {
     return httpOptions
   }
 
+  createCustomer(createCustomerForm: NgForm) {
+
+  }
 }
