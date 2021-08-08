@@ -1,1 +1,141 @@
-<p>transaction works!</p>
+<div class="row">
+  <!-- BEGIN col-4 -->
+  <div class="col-xl-12 col-lg-12">
+    <!-- BEGIN card -->
+    <div class="card border-0 mb-3 text-inverse">
+      <!-- BEGIN card-body -->
+      <div class="card-body"
+           style="background: no-repeat bottom right; background-image: url(../assets/img/svg/img-4.svg); background-size: auto 60%;">
+        <!-- BEGIN title -->
+        <div class="mb-3">
+          <b>Customer Details</b>
+          <span class="ms-2"><i class="fa fa-info-circle" data-bs-toggle="popover" data-bs-trigger="hover"
+                                data-bs-title="Finance" data-bs-placement="top"
+                                data-bs-content="Finance details for the customer."></i></span>
+        </div>
+        <h2 class="mb-10px">$<span data-animation="number">{{getTotal()}}</span></h2>
+
+        <br>
+        <div class="mx-10px my-10px">
+          <h3 class="mx-50px my-30px">Customer Name: {{getName()}}</h3>
+        </div>
+        <div class="mx-10px my-10px">
+          <h3 class="mx-50px my-30px">Interest Rate: {{getInterest()}}</h3>
+        </div>
+        <div class="mx-10px my-10px">
+          <h3 class="mx-50px my-30px">Remaining Amount: {{getRemaining()}}</h3>
+        </div>
+        <div class="mx-10px my-10px">
+          <h3 class="mx-50px my-30px">Monthly Payment: {{getMonthlyInstallment()}}</h3>
+        </div>
+      </div>
+      <!-- END widget-list -->
+    </div>
+    <!-- END card -->
+  </div>
+</div>
+<br>
+<br>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+        href="#createTransaction"><i class="far fa-calculator pr-2" aria-hidden="true"
+                                     (click)="createTransactionPopup()"></i>Transaction
+</button>
+
+<div class="modal" id="createTransaction" aria-hidden="true" aria-labelledby="createTransactionModalToggleLabel"
+     tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title form-header">New Customer Transaction</h4>
+        <button type="button" class="btn btn-xs btn-icon btn-danger" data-bs-dismiss="modal"
+                #closeTransactionPopup data-toggle="panel-remove"><i class="fa fa-times"></i></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="panel-body">
+          <form class="form-horizontal" #createTransactionForm="ngForm" data-parsley-validate="true" name="demo-form"
+                (ngSubmit)="createTransaction(createTransactionForm)">
+            <div class="form-group row mb-3">
+              <label class="col-lg-4 col-form-label form-label" for="amount">Amount * :</label>
+              <div class="col-lg-8">
+                <input class="form-control" type="text" id="amount" name="amount"
+                       placeholder="Amount " required data-parsley-required="true" [(ngModel)]="returnedAmount"
+                       #amount="ngModel"/>
+                <div class="alert alert-danger error-message" role="alert" *ngIf="invalidForm && amount.invalid">
+                  Please enter valid amount
+                </div>
+              </div>
+            </div>
+            <div class="form-group row mb-3">
+              <label class="col-lg-4 col-form-label form-label" for="person">Person To * :</label>
+              <div class="col-lg-8">
+                <input class="form-control" type="text" id="person" name="person"
+                       placeholder="Returned To"
+                       required data-parsley-required="true" [(ngModel)]="returnedTo" #person="ngModel"/>
+                <div class="alert alert-danger error-message" role="alert" *ngIf="invalidForm && person.invalid">
+                  Please enter valid person name
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="form-group row">
+              <label class="col-lg-4 col-form-label form-label">&nbsp;</label>
+              <div class="col-lg-8">
+                <button type="submit" class="btn btn-primary submit-button" data-bs-toggle="modal">
+                  Submit
+                </button>
+                <div>
+                </div>
+              </div>
+              <div class="alert alert-danger error-message" role="alert" *ngIf="errorWhileCreating">
+                {{createErrorMessage}}
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- END panel-body -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<br>
+
+<br>
+<div class="panel-body">
+  <div class="table-responsive">
+    <table class="table table-striped mb-0 align-middle">
+      <thead>
+      <tr>
+        <th>
+          Amount
+        </th>
+        <th>
+          Date
+        </th>
+        <th>
+          Person
+        </th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let transaction of transactions">
+        <td>
+          {{transaction.returnedAmount}}
+        </td>
+        <td>
+          {{transaction.returnedDate}}
+        </td>
+        <td>
+          {{transaction.returnedTo}}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-        href="#createUser"><i class="far fa-user pr-2" aria-hidden="true"></i>Customer
+        href="#createUser"><i class="far fa-user pr-2" aria-hidden="true" (click)="createCustomerPopup()"></i>Customer
 </button>
 
 <div class="modal" id="createUser" aria-hidden="true" aria-labelledby="createUserModalToggleLabel" tabindex="-1">
@@ -8,7 +8,7 @@
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title form-header" i18n="@@createNewUserHeaderId">New Customer Details</h4>
+        <h4 class="modal-title form-header">New Customer Details</h4>
         <button type="button" class="btn btn-xs btn-icon btn-danger" data-bs-dismiss="modal"
                 #closeCreatePopup data-toggle="panel-remove"><i class="fa fa-times"></i></button>
       </div>
@@ -154,7 +154,7 @@
       </thead>
 
       <tbody>
-      <tr *ngFor="let customer of customerList">
+      <tr *ngFor="let customer of customerList" (click)="customerDetails(customer)">
         <td>
           {{customer.customerName}}
         </td>
@@ -181,11 +181,3 @@
     </table>
   </div>
 </div>
-
-
-<!--customerName" : "Pooja",
-"phoneNumber": "+919611671871",
-"monthlyPaymentDate": 10,
-"totalAmount": 100000,
-"interestRate": 5,
-"months":-->

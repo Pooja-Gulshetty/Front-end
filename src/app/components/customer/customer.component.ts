@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {CustomerResponse} from "./customer-response";
 import {LoginService} from "../../service/login.service";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {NgForm} from "@angular/forms";
+import {CustomerRequest} from "./customer-request";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-customer',
@@ -13,20 +15,15 @@ export class CustomerComponent implements OnInit {
 
   baseUri = "http://192.168.2.85:9090/finance/"
 
-  constructor(private loginService: LoginService,private httpClient:HttpClient) {
+  constructor(private loginService: LoginService, private httpClient: HttpClient, private router: Router) {
   }
 
   componentUrl = "/customers"
   customerList: CustomerResponse[] = []
-  name=""
+
   invalidForm = false
   errorWhileCreating = false
-  createErrorMessage= ""
-  phoneNumber= ""
-  monthlyPaymentDate=""
-  interestRate=""
-  months=""
-  totalAmount=""
+  createErrorMessage = ""
 
   ngOnInit(): void {
     this.getCustomerList()
@@ -61,7 +58,68 @@ export class CustomerComponent implements OnInit {
     return httpOptions
   }
 
-  createCustomer(createCustomerForm: NgForm) {
+  name = ""
+  phoneNumber = ""
+  monthlyPaymentDate = ""
+  interestRate = ""
+  months = ""
+  totalAmount = ""
 
+  createCustomer(createCustomerForm: NgForm) {
+    if (createCustomerForm.invalid) {
+      this.invalidForm = true
+      return
+    }
+//http://192.168.2.85:9090/finance/Lokesh/customers
+    let resourceUrl = this.baseUri + this.loginService.getFinanceId() + this.componentUrl
+    let headers = this.getHeaders()
+    let customerRequest = new CustomerRequest(this.name, this.phoneNumber, this.monthlyPaymentDate, this.totalAmount, this.interestRate, this.months)
+    let data = JSON.stringify(customerRequest)
+    this.httpClient.post(resourceUrl, data, headers)
+      .subscribe(
+        success => {
+          this.getCustomerList()
+          this.closeCreateCustomer()
+        },
+        httpErrorResponse => {
+          this.errorWhileCreating = true
+          this.createErrorMessage = this.getErrorMessage(httpErrorResponse)
+        }
+      )
+
+  }
+
+  private getErrorMessage(httpErrorResponse: HttpErrorResponse) {
+    let errorBody = httpErrorResponse.error
+    let message = errorBody.message
+    return message
+  }
+
+  createCustomerPopup() {
+    this.resetValues()
+  }
+
+  private resetValues() {
+    this.name = ""
+    this.phoneNumber = ""
+    this.monthlyPaymentDate = ""
+    this.interestRate = ""
+    this.months = ""
+    this.totalAmount = ""
+    this.invalidForm = false
+    this.errorWhileCreating = false
+    this.createErrorMessage = ""
+  }
+
+  @ViewChild("closeCreatePopup")
+  closeCreateCustomerPopup?: ElementRef
+
+  closeCreateCustomer() {
+    this.closeCreateCustomerPopup?.nativeElement.click()
+  }
+
+  customerDetails(customer: CustomerResponse) {
+    console.log(customer.customerName)
+    this.router.navigate(["transactions/" + customer.customerName])
   }
 }
