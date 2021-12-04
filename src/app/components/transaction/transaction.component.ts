@@ -6,6 +6,7 @@ import {LoginService} from "../../service/login.service";
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {NgForm} from "@angular/forms";
 import {TransactionRquest} from "./transaction-rquest";
+import {UrlService} from "../../service/url.service";
 
 @Component({
   selector: 'app-transaction',
@@ -13,12 +14,10 @@ import {TransactionRquest} from "./transaction-rquest";
   styleUrls: ['./transaction.component.css']
 })
 export class TransactionComponent implements OnInit {
-
-  baseUri = "http://192.168.2.85:9090/finance/"
   customerUrl = "/customers/"
   componentUrl = "/transactions"
 
-  constructor(private router: Router, private loginService: LoginService, private httpClient: HttpClient) {
+  constructor(private router: Router, private loginService: LoginService, private httpClient: HttpClient, private urlService:UrlService) {
   }
 
   private customerDetail: CustomerResponse | null = null
@@ -51,7 +50,7 @@ export class TransactionComponent implements OnInit {
   }
 
   private getCustomer(customerName: string) {
-    let url = this.baseUri + this.loginService.getFinanceId() + this.customerUrl + customerName
+    let url = this.urlService.getUrl() + this.loginService.getFinanceId() + this.customerUrl + customerName
     let headers = this.getHeaders()
     this.httpClient.get<CustomerResponse>(url, headers)
       .subscribe(
@@ -67,7 +66,7 @@ export class TransactionComponent implements OnInit {
   private getTransactions(customerName: string) {
 
     // http://192.168.2.85:9090/finance/Lokesh/customers/Loku/transactions
-    let url = this.baseUri + this.loginService.getFinanceId() + this.customerUrl + customerName + this.componentUrl
+    let url = this.urlService.getUrl() + this.loginService.getFinanceId() + this.customerUrl + customerName + this.componentUrl
     let headers = this.getHeaders()
     this.httpClient.get<TransactionResponse[]>(url, headers)
       .subscribe(
@@ -97,7 +96,7 @@ export class TransactionComponent implements OnInit {
       return
     }
 
-    const url = this.baseUri + this.loginService.getFinanceId() + this.customerUrl + this.getName() + this.componentUrl
+    const url = this.urlService.getUrl() + this.loginService.getFinanceId() + this.customerUrl + this.getName() + this.componentUrl
     const headers = this.getHeaders()
     const request = new TransactionRquest(this.returnedAmount, this.returnedTo)
     const data = JSON.stringify(request)

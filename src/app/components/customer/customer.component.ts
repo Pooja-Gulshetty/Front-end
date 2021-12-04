@@ -5,6 +5,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {NgForm} from "@angular/forms";
 import {CustomerRequest} from "./customer-request";
 import {Router} from "@angular/router";
+import {UrlService} from "../../service/url.service";
 
 @Component({
   selector: 'app-customer',
@@ -13,9 +14,7 @@ import {Router} from "@angular/router";
 })
 export class CustomerComponent implements OnInit {
 
-  baseUri = "http://192.168.2.85:9090/finance/"
-
-  constructor(private loginService: LoginService, private httpClient: HttpClient, private router: Router) {
+  constructor(private loginService: LoginService, private httpClient: HttpClient, private router: Router, private urlService: UrlService) {
   }
 
   componentUrl = "/customers"
@@ -30,7 +29,7 @@ export class CustomerComponent implements OnInit {
   }
 
   getCustomerList() {
-    let url = this.baseUri + this.loginService.getFinanceId() + this.componentUrl
+    let url = this.urlService.getUrl() + this.loginService.getFinanceId() + this.componentUrl
     let headers = this.getHeaders()
     this.httpClient.get<CustomerResponse[]>(url, headers)
       .subscribe(
@@ -71,7 +70,7 @@ export class CustomerComponent implements OnInit {
       return
     }
 //http://192.168.2.85:9090/finance/Lokesh/customers
-    let resourceUrl = this.baseUri + this.loginService.getFinanceId() + this.componentUrl
+    let resourceUrl = this.urlService.getUrl() + this.loginService.getFinanceId() + this.componentUrl
     let headers = this.getHeaders()
     let customerRequest = new CustomerRequest(this.name, this.phoneNumber, this.monthlyPaymentDate, this.totalAmount, this.interestRate, this.months)
     let data = JSON.stringify(customerRequest)

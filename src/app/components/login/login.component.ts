@@ -5,6 +5,7 @@ import {LoginRequest} from "./login-request";
 import {LoginResponse} from "./login.response";
 import {Router} from "@angular/router";
 import {LoginService} from "../../service/login.service";
+import {UrlService} from "../../service/url.service";
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
   private router: Router
   private loginService: LoginService
 
-  constructor(httpClient: HttpClient, router: Router, loginService: LoginService) {
+  constructor(httpClient: HttpClient, router: Router, loginService: LoginService, private urlService: UrlService) {
     this.httpClient = httpClient
     this.router = router
     this.loginService = loginService
@@ -48,7 +49,7 @@ export class LoginComponent implements OnInit {
     let jsonData = JSON.stringify(loginRequest)
 
     // url
-    let url = "http://192.168.2.85:9090/finance/login"
+    let url = this.urlService.getUrl() + "login"
 
     let header = this.getHeaders();
 
